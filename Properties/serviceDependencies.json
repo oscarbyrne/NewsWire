@@ -3,6 +3,11 @@
     "identityapp1": {
       "type": "identityapp",
       "connectionId": "AzureAD:ClientSecret"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DatabaseConnection",
+      "dynamicId": null
     }
   }
 }
