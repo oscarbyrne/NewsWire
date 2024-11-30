@@ -35,6 +35,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
+    - uses: actions/checkout@v4
     - name: Download artifact from build job
       uses: actions/download-artifact@v4
       with:
@@ -44,6 +45,11 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.NewsWireDev_SPN }}
+    - name: Run ARM deploy
+      uses: azure/arm-deploy@v1
+      with:
+        scope: subscription
+        template: ${{ env.WORKING_DIRECTORY }}/Properties/ServiceDependencies/NewsWireDev/mssql1.arm.json
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
