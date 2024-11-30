@@ -50,6 +50,7 @@ jobs:
       with:
         scope: subscription
         template: ${{ env.WORKING_DIRECTORY }}/Properties/ServiceDependencies/NewsWireDev/mssql1.arm.json
+        region: canadacentral
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
