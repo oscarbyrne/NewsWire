@@ -45,7 +45,7 @@ jobs:
     - name: Azure Login
       uses: azure/login@v2
       with:
-        creds: ${{ secrets.NEWSWIRE_SPN }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy Bicep file
       uses: azure/arm-deploy@v1
       with:
