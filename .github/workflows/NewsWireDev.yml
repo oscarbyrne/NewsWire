@@ -9,6 +9,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
   WORKING_DIRECTORY: .
+  BICEP_TEMPLATE_PATH: .\orchestration\main.bicep
 jobs:
   build:
     runs-on: windows-latest
@@ -45,12 +46,15 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.NewsWireDev_SPN }}
-    - name: Run ARM deploy
+    - name: Deploy Bicep file
       uses: azure/arm-deploy@v1
       with:
-        scope: subscription
-        template: ${{ env.WORKING_DIRECTORY }}/Properties/ServiceDependencies/NewsWireDev/mssql1.arm.json
-        region: canadacentral
+        template: ${{ env.BICEP_TEMPLATE_PATH }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        parameters: >-
+          appName=${{ env.AZURE_WEBAPP_NAME }}
+          dbAdminLogin=${{ secrets.dbAdminLogin }}
+          dbAdminLoginPassword=${{ secrets.dbAdminLoginPassword }}
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
